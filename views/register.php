@@ -10,15 +10,14 @@
         <h1>Crie sua conta!</h1>
     </header>
     <main>
-        <form action="" method="post" autocomplete="on">
+        <form action="../controllers/register_controller.php" method="post" autocomplete="on">
             <div>
                 <label for="name">Digite seu nome completo: </label>
                 <input type="text" name="name" id="name">
             </div>
             <div>
-                <label for="cpf">Digite seu CPF: </label>
-                <input type="text" name="cpf" id="cpf" pattern="/^\d{3}\.\d{3}\.\d{3}-\d{2}$|^\d{11}$/
-" placeholder="12345678909">
+                <label for="cpf">Digite seu CPF (apenas números): </label>
+                <input type="text" name="cpf" id="cpf" placeholder="12345678909" maxlength="11">
             </div>
             <div>
                 <label for="email">E-mail: </label>
@@ -29,7 +28,7 @@
                 <input type="password" name="password" id="password">
             </div>
             <div>
-                <label for="">Tipo de conta: </label>
+                <label for="option_user">Tipo de conta: </label>
                 <div>Cliente <input type="radio" name="option_user" id="client" value="client" checked></div>
                 <div>Colaborador <input type="radio" name="option_user" id="collaborator" value="collaborator"></div>
             </div>

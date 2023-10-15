@@ -10,7 +10,7 @@
         <h1>Faça Login!</h1>
     </header>
     <main>
-        <form action="" method="post" autocomplete="on">
+        <form action="../controllers/login_controller.php" method="post" autocomplete="on">
             <div>
                 <label for="email">E-mail: </label>
                 <input type="email" name="email" id="email">
