@@ -13,11 +13,11 @@
         <form action="../controllers/login_controller.php" method="post" autocomplete="on">
             <div>
                 <label for="email">E-mail: </label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" required>
             </div>
             <div>
                 <label for="password">Senha: </label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" required>
             </div>
             <input type="submit" value="Logar">
         </form>

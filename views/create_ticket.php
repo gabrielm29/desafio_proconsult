@@ -1,5 +1,5 @@
 <?php 
-    
+    $id = $_GET["id"] ?? "";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -10,10 +10,24 @@
 </head>
 <body>
     <header>
-        <h1>Verifique os seus tickets de suporte</h1>
+        <h1>Crie o seu ticket</h1>
     </header>
     <main>
-        
+        <form action="../controllers/create_ticket_controller.php?id=<?php echo $id?>" method="post" autocomplete="on" enctype="multipart/form-data">
+            <div>
+                <label for="title">Título: </label>
+                <input type="text" name="title" id="title" required>
+            </div>
+            <div>
+                <label for="desc">Descrição: </label>
+                <textarea name="desc" id="desc" cols="20" rows="5" required></textarea>
+            </div>
+            <div>
+                <label for="attachment">Anexo (opcional): </label>
+                <input type="file" name="attachment" id="attachment">
+            </div>
+            <input type="submit" value="Criar Chamado">
+        </form>
     </main>
 </body>
 </html>

@@ -2,7 +2,6 @@
     // Importando o arquivo com a conexão
     require_once("../models/db.php");
 
-
     // Recebendo os valores passado pelo método POST
     $id = hash('sha256', uniqid(mt_rand(), true));
     $name = $_POST["name"] ?? "";

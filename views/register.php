@@ -13,19 +13,19 @@
         <form action="../controllers/register_controller.php" method="post" autocomplete="on">
             <div>
                 <label for="name">Digite seu nome completo: </label>
-                <input type="text" name="name" id="name">
+                <input type="text" name="name" id="name" required>
             </div>
             <div>
                 <label for="cpf">Digite seu CPF (apenas números): </label>
-                <input type="text" name="cpf" id="cpf" placeholder="12345678909" maxlength="11">
+                <input type="text" name="cpf" id="cpf" placeholder="12345678909" maxlength="11" required>
             </div>
             <div>
                 <label for="email">E-mail: </label>
-                <input type="email" name="email" id="email">
+                <input type="email" name="email" id="email" required>
             </div>
             <div>
                 <label for="password">Senha: </label>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password" required>
             </div>
             <div>
                 <label for="option_user">Tipo de conta: </label>
