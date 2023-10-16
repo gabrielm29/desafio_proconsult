@@ -20,7 +20,7 @@
 
     // Inserindo os valores na tabela
 
-    $insert_sql = "INSERT INTO support_calls(id, user_id, titulo, descricao, anexo_nome, anexo_tipo, anexo_arquivo) VALUES ('$id', '$user_id', '$title', '$desc', '$name_attachment', '$type_attachment', '$data_attachment')";
+    $insert_sql = "INSERT INTO support_calls(id, user_id, titulo, descricao, anexo_nome, anexo_tipo, anexo_arquivo, status_call) VALUES ('$id', '$user_id', '$title', '$desc', '$name_attachment', '$type_attachment', '$data_attachment', 'Aberto')";
 
     $result = mysqli_query($conn, $insert_sql);
 
