@@ -1,4 +1,4 @@
-<?php
+<?php 
     // Iniciando ou resumindo a sessão PHP
     session_start();
 
@@ -16,44 +16,30 @@
     // Recebendo valores passados via POST e GET de forma segura
     $id = hash('sha256', uniqid(mt_rand(), true));
     $user_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-    $desc = filter_input(INPUT_POST, 'desc', FILTER_SANITIZE_STRING);
-    $count_type = "Aberto";
-
-    // Tratamento seguro de anexos
-    if (isset($_FILES["attachment"]) && $_FILES["attachment"]["error"] === UPLOAD_ERR_OK) {
-        $name_attachment = $_FILES["attachment"]["name"];
-        $type_attachment = $_FILES["attachment"]["type"];
-        $temporary_attachment = $_FILES["attachment"]["tmp_name"];
-        $data_attachment = file_get_contents($temporary_attachment);
-        $data_attachment = mysqli_real_escape_string($conn, $data_attachment);
-    } else {
-        $name_attachment = '';
-        $type_attachment = '';
-        $data_attachment = '';
-    }
+    $call_id = filter_input(INPUT_GET, 'call_id', FILTER_SANITIZE_STRING);
+    $resp = filter_input(INPUT_POST, 'resp', FILTER_SANITIZE_STRING);
 
     // Inserindo os valores na tabela usando consulta preparada
-    $insert_sql = "INSERT INTO support_calls(id, user_id, titulo, descricao, anexo_nome, anexo_tipo, anexo_arquivo, status_call) VALUES (?, ?, ?, ?, ?, ?, ?, '$count_type')";
+    $insert_sql = "INSERT INTO resposts(id, user_id, call_id, resposta) VALUES (?, ?, ?, ?)";
 
     if ($stmt = mysqli_prepare($conn, $insert_sql)) {
-        mysqli_stmt_bind_param($stmt, "sssssss", $id, $user_id, $title, $desc, $name_attachment, $type_attachment, $data_attachment);
+        mysqli_stmt_bind_param($stmt, "ssss", $id, $user_id, $call_id, $resp);
         if (mysqli_stmt_execute($stmt)) {
 
             // Redirecionando para a página de visualização de chamados após a inserção bem-sucedida
-            header("Location: ../views/view_tickets.php?id=" . $user_id);
+            header("Location: ../views/support_ticket.php?id=" . $user_id);
         } else {
 
             // Tratamento de erro ao inserir no banco de dados
             echo "Erro ao inserir no banco de dados.";
-            header("Location: ../views/create_ticket.php?id=" . $user_id);
+            header("Location: ../views/resposts.php?id=" . $user_id);
         }
         mysqli_stmt_close($stmt);
     } else {
 
         // Tratamento de erro na preparação da consulta
         echo "Erro na preparação da consulta.";
-        header("Location: ../views/create_ticket.php?id=" . $user_id);
+        header("Location: ../views/resposts.php?id=" . $user_id);
     }
 
     // Fechando a conexão com o banco de dados após o uso

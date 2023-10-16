@@ -1,11 +1,35 @@
 <?php
+    // Inicia a sessão
     session_start();
+
+    // Importando arquivo com a conexão ao banco de dados
+    require_once("../models/db.php"); 
+    
+    // Verifica se o usuário está logado e se a sessão é válida
     if (!isset($_SESSION['user_id']) || $_SESSION['expire_time'] < time()) {
-        // Redirecionando o usuário para a página de login
+
+        // Redireciona o usuário para a página de login se não estiver logado ou a sessão expirou
         header("Location: ../views/login.php");
         exit;
-    } 
+    }
+    
+    // Obtém o valor "id" dos parâmetros GET da URL
     $id = $_GET["id"] ?? "";
+
+    // Consulta o tipo de conta do usuário (cliente ou colaborador)
+    $select_sql = "SELECT * FROM users WHERE id=?";
+
+    $stmt = mysqli_prepare($conn, $select_sql);
+    mysqli_stmt_bind_param($stmt, "s", $id);
+    mysqli_stmt_execute($stmt);
+    
+    $result_sql = mysqli_stmt_get_result($stmt);
+    $row_user = mysqli_fetch_assoc($result_sql);
+
+    // Caso o usuário seja um cliente, o redireciona para a sua página
+    if ($row_user["tipo_conta"] == "collaborator") {
+        header("Location: support_ticket.php?id=$id");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
