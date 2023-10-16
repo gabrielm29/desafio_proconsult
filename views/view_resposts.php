@@ -60,20 +60,24 @@
                 // Link para baixar anexo
                 echo "<p><a href='../controllers/download_attachment.php?id=" . $row["user_id"] . "&call_id=" . $row["id"] . "'>Baixar anexo</a></p>";
 
-                $select_resp = "SELECT resposta FROM resposts WHERE call_id='$call_id'";
+                $select_resp = "SELECT resposta FROM resposts WHERE call_id='$call_id' ORDER BY data_criacao DESC";
                 $result_resp = mysqli_query($conn, $select_resp);
                 $row_resp = mysqli_fetch_assoc($result_resp);
 
                 // Resposta
                 echo "<form action='../controllers/resposts_controller.php?id=$id&call_id=$call_id' method='post'>";
                 echo "<div><label for='desc'>Resposta: </label>";
-                echo "<textarea name='resp' id='resp' cols='20' rows='5'required readonly>".$row_resp["resposta"]."</textarea></div>";
+                if($row_resp !== null){
+                    echo "<textarea name='resp' id='resp' cols='20' rows='5'required readonly>".$row_resp["resposta"]."</textarea></div>";
+                }else{
+                    echo "<textarea name='resp' id='resp' cols='20' rows='5'required readonly>Sem resposta</textarea></div>";
+                }
                 echo "</form>";
             
                 // Verifica se o chamado não está finalizado para permitir ações
                 if ($row["status_call"] !== "Finalizado") {
                     
-                    // Link para finalizar o chamado
+                    // Link para voltar
                     echo "<p><a href='../views/view_tickets.php?case=2&id=" . $id . "&call_id=" . $row["id"] . "'>Voltar</a></p>";
 
                     // Link para finalizar o chamado

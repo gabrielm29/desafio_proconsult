@@ -37,11 +37,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets dos Clientes</title>
+    <title>Respostas</title>
 </head>
 <body>
     <header>
-        <h1>Tickets dos Clientes</h1>
+        <h1>Respostas</h1>
     </header>
     <main>
         <p style="text-align:right;font-size:2em;"><a href="../controllers/logout.php">Logout</a></p>
@@ -60,20 +60,26 @@
                 // Link para baixar anexo
                 echo "<p><a href='../controllers/download_attachment.php?id=" . $row["user_id"] . "&call_id=" . $row["id"] . "'>Baixar anexo</a></p>";
 
-                $select_resp = "SELECT resposta FROM resposts WHERE user_id='$id' AND call_id='$call_id'";
+                $select_resp = "SELECT resposta FROM resposts WHERE user_id='$id' AND call_id='$call_id' ORDER BY data_criacao DESC";
                 $result_resp = mysqli_query($conn, $select_resp);
                 $row_resp = mysqli_fetch_assoc($result_resp);
 
                 // Resposta
                 echo "<form action='../controllers/resposts_controller.php?id=$id&call_id=$call_id' method='post'>";
                 echo "<div><label for='desc'>Resposta: </label>";
-                echo "<textarea name='resp' id='resp' cols='20' rows='5'required>".$row_resp["resposta"]."</textarea></div>";
+                if($row_resp !== null){
+                    echo "<textarea name='resp' id='resp' cols='20' rows='5'required>".$row_resp["resposta"]."</textarea></div>";
+                }else{
+                    echo "<textarea name='resp' id='resp' cols='20' rows='5'required>Sem resposta</textarea></div>";
+                }
                 echo "<input type='submit' value='Responder'>";
                 echo "</form>";
             
                 // Verifica se o chamado não está finalizado para permitir ações
                 if ($row["status_call"] !== "Finalizado") {
-                    
+                    // Link para voltar
+                    echo "<p><a href='../views/support_ticket.php?case=2&id=" . $id . "&call_id=" . $row["id"] . "'>Voltar</a></p>";
+
                     // Link para finalizar o chamado
                     echo "<p><a href='../controllers/support_ticket_controller.php?case=2&id=" . $id . "&call_id=" . $row["id"] . "'>Finalizar</a></p>";
                 }
