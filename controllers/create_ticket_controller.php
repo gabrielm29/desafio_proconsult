@@ -14,6 +14,8 @@
     if(is_uploaded_file($temporary_attachment)){
         $data_attachment = file_get_contents($temporary_attachment);
         $data_attachment = mysqli_real_escape_string($conn, $data_attachment);
+    }else{
+        $data_attachment = '';
     }
 
     // Inserindo os valores na tabela
@@ -21,4 +23,10 @@
     $insert_sql = "INSERT INTO support_calls(id, user_id, titulo, descricao, anexo_nome, anexo_tipo, anexo_arquivo) VALUES ('$id', '$user_id', '$title', '$desc', '$name_attachment', '$type_attachment', '$data_attachment')";
 
     $result = mysqli_query($conn, $insert_sql);
+
+    if(mysqli_affected_rows($conn) > 0){
+        header("Location: ../views/view_tickets.php?id=".$user_id);
+    }else{
+        header("Location: ../views/create_ticket.php?id=".$user_id);
+    }
 ?>

@@ -28,6 +28,7 @@
             </div>
             <input type="submit" value="Criar Chamado">
         </form>
+        <p><a href="view_tickets.php?id=<?php echo $id?>">Ver Tickets</a></p>
     </main>
 </body>
 </html>
