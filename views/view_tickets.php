@@ -1,4 +1,11 @@
 <?php
+    session_start();
+    if (!isset($_SESSION['user_id']) || $_SESSION['expire_time'] < time()) {
+        // Redirecionando o usuário para a página de login
+        header("Location: ../views/login.php");
+        exit;
+    }
+     
     // Importando arquivo com a conexão
     require_once("../models/db.php");
 
@@ -16,6 +23,7 @@
         <h1>Meus Tickets</h1>
     </header>
     <main>
+        <p style="text-align:right;font-size:2em;"><a href="../controllers/logout.php">Logout</a></p>
         <?php 
             $select_query = "SELECT * FROM support_calls WHERE user_id='$id' ORDER BY data_criacao DESC";
             $result_query = mysqli_query($conn, $select_query);

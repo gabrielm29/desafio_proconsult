@@ -1,4 +1,10 @@
-<?php 
+<?php
+    session_start();
+    if (!isset($_SESSION['user_id']) || $_SESSION['expire_time'] < time()) {
+        // Redirecionando o usuário para a página de login
+        header("Location: ../views/login.php");
+        exit;
+    } 
     $id = $_GET["id"] ?? "";
 ?>
 <!DOCTYPE html>
@@ -13,6 +19,7 @@
         <h1>Crie o seu ticket</h1>
     </header>
     <main>
+        <p style="text-align:right;font-size:2em;"><a href="../controllers/logout.php">Logout</a></p>
         <form action="../controllers/create_ticket_controller.php?id=<?php echo $id?>" method="post" autocomplete="on" enctype="multipart/form-data">
             <div>
                 <label for="title">Título: </label>
